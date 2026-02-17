@@ -1,4 +1,4 @@
-export interface BuisnessInput{
+export interface BusinessInput{
   revenuePerUnit : string;
   costPerUnit : string;
   numberOfUnit : string;
