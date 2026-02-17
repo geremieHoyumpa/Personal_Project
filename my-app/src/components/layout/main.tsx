@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { BuisnessInput } from '../../types/businessInput';
+import { totalCost, totalRevenue } from '../../types/utils/calculate';
 
 
 
@@ -13,6 +14,8 @@ export default function Main(){
         fixedCost : "",
 
     });
+    const [viewTotalCost, setTotalCost] = useState<number>(0);
+    
   return (
     <div>
       {/* // <!--Main Content--> */}
@@ -83,7 +86,11 @@ export default function Main(){
                 </div>
 
                 {/* // <!-- Calculate Button --> */}
-                <button type="button" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-sm mt-6">
+                <button type="button" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-sm mt-6"
+                    onClick = {() => {
+                            setTotalCost(totalCost(input));
+                        }
+                    }    >
                     Calculate
                 </button>
               </form>
@@ -129,7 +136,7 @@ export default function Main(){
                         {/* <!-- Total Cost --> */}
                         <div className="border-l-4 border-orange-500 bg-orange-50 p-4 rounded-r">
                             <p className="text-sm text-orange-700 font-medium mb-1">Total Cost</p>
-                            <p className="text-3xl font-bold text-orange-900">$0.00</p>
+                            <p className="text-3xl font-bold text-orange-900">${viewTotalCost.toFixed(2)}</p>
                         </div>
                     </div>
                 </div>
