@@ -1,13 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
-import { BuisnessInput } from '../../types/businessInput';
-import { totalCost, totalRevenue } from '../../types/utils/calculate';
+import { BusinessInput } from '../../types/businessInput';
+import { totalCost, totalRevenue, breakEvenPoint, netProfit, profitMargin } from '../../types/utils/calculate';
 
 
 
 export default function Main(){
 
-    const [input, setInput] = useState<BuisnessInput>({
+    const [input, setInput] = useState<BusinessInput>({
         revenuePerUnit : "",
         costPerUnit : "",
         numberOfUnit : "",
@@ -15,6 +15,10 @@ export default function Main(){
 
     });
     const [viewTotalCost, setTotalCost] = useState<number>(0);
+    const [viewTotalRevenue, setTotalRevenue] = useState<number>(0);
+    const [viewBreakEvenPoint, setBreakEvenPoint] = useState<number>(0);
+    const [viewNetProfit, setNetProfit] = useState<number>(0);
+    const [viewProfitMargin, setProfitMargin] = useState<number>(0);
     
   return (
     <div>
@@ -89,6 +93,10 @@ export default function Main(){
                 <button type="button" className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition shadow-sm mt-6"
                     onClick = {() => {
                             setTotalCost(totalCost(input));
+                            setTotalRevenue(totalRevenue(input));
+                            setBreakEvenPoint(breakEvenPoint(input));
+                            setNetProfit(netProfit(input));
+                            setProfitMargin(profitMargin(input));
                         }
                     }    >
                     Calculate
@@ -112,31 +120,31 @@ export default function Main(){
                         {/* <!-- Net Profit --> */}
                         <div className="border-l-4 border-green-500 bg-green-50 p-4 rounded-r">
                             <p className="text-sm text-green-700 font-medium mb-1">Net Profit</p>
-                            <p className="text-3xl font-bold text-green-900">$0.00</p>
+                            <p className="text-3xl font-bold text-green-900">₱{viewNetProfit.toFixed(2)}</p>
                         </div>
 
                         {/* <!-- Margin Percentage --> */}
                         <div className="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-r">
                             <p className="text-sm text-blue-700 font-medium mb-1">Profit Margin</p>
-                            <p className="text-3xl font-bold text-blue-900">0.0%</p>
+                            <p className="text-3xl font-bold text-blue-900">{viewProfitMargin.toFixed(1)}%</p>
                         </div>
 
                         {/* <!-- Break-even Point --> */}
                         <div className="border-l-4 border-purple-500 bg-purple-50 p-4 rounded-r">
                             <p className="text-sm text-purple-700 font-medium mb-1">Break-even Point</p>
-                            <p className="text-3xl font-bold text-purple-900">0 units</p>
+                            <p className="text-3xl font-bold text-purple-900">{viewBreakEvenPoint.toFixed(0)} units</p>
                         </div>
 
                         {/* <!-- Revenue --> */}
                         <div className="border-l-4 border-indigo-500 bg-indigo-50 p-4 rounded-r">
                             <p className="text-sm text-indigo-700 font-medium mb-1">Total Revenue</p>
-                            <p className="text-3xl font-bold text-indigo-900">$0.00</p>
+                            <p className="text-3xl font-bold text-indigo-900">₱{viewTotalRevenue.toFixed(2)}</p>
                         </div>
 
                         {/* <!-- Total Cost --> */}
                         <div className="border-l-4 border-orange-500 bg-orange-50 p-4 rounded-r">
                             <p className="text-sm text-orange-700 font-medium mb-1">Total Cost</p>
-                            <p className="text-3xl font-bold text-orange-900">${viewTotalCost.toFixed(2)}</p>
+                            <p className="text-3xl font-bold text-orange-900">₱{viewTotalCost.toFixed(2)}</p>
                         </div>
                     </div>
                 </div>
