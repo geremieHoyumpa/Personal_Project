@@ -47,10 +47,17 @@ export default function Main(){
                     <label htmlFor="revenue" className="block text-sm font-medium text-gray-700 mb-2">Revenue per Unit</label>
                     <div className="relative">
                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₱</span>
-                        <input type="number" id="revenue" name="revenue" placeholder="0.00" step="0.01"
+                        <input type="number" id="revenue" name="revenue" placeholder="0.00" step="0.01" min={0}
                         value = {input.revenuePerUnit}
                         onChange={(e) => 
                             setInput({...input, revenuePerUnit: e.target.value})
+                        }
+                        onKeyDown={(e) => {
+                            if (e.key === "-" || e.key === "e") {
+                            // prevent negative numbers and "e" for scientific notation
+                            e.preventDefault();
+                            }
+                          }  
                         }
                             className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
                     </div>
@@ -66,6 +73,13 @@ export default function Main(){
                         onChange={(e) =>
                             setInput({...input, costPerUnit: e.target.value})//...input copies all existing propertis in the object, so nothing gets eraed.
                         }
+                        onKeyDown={(e) => {
+                            if (e.key === "-" || e.key === "e") {
+                            // prevent negative numbers and "e" for scientific notation
+                            e.preventDefault();
+                            }
+                          }  
+                        }
                             className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
                     </div>
                 </div>
@@ -73,10 +87,17 @@ export default function Main(){
                 {/* // <!-- Units Input --> */}
                 <div>
                     <label htmlFor="units" className="block text-sm font-medium text-gray-700 mb-2">Number of Units</label>
-                    <input type="number" id="units" name="units" placeholder="0"
+                    <input type="number" id="units" name="units" placeholder="0" min={0}
                         value = {input.numberOfUnit}
                         onChange={(e) => 
                             setInput({...input, numberOfUnit: e.target.value})
+                        }
+                        onKeyDown={(e) => {
+                            if (e.key === "-" || e.key === "e") {
+                            // prevent negative numbers and "e" for scientific notation
+                            e.preventDefault();
+                            }
+                          }  
                         }
                             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
                 </div>
@@ -86,11 +107,18 @@ export default function Main(){
                     <label htmlFor="fixedCosts" className="block text-sm font-medium text-gray-700 mb-2">Fixed Costs</label>
                     <div className="relative">
                         <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₱</span>
-                        <input type="number" id="fixedCosts" name="fixedCosts" placeholder="0.00" step="0.01"
+                        <input type="number" id="fixedCosts" name="fixedCosts" placeholder="0.00" step="0.01" min={0}
                             value = {input.fixedCost}
                             onChange={(e) => 
                                 setInput({...input, fixedCost: e.target.value})
                             }
+                            onKeyDown={(e) => {
+                                    if (e.key === "-" || e.key === "e") {
+                                    // prevent negative numbers and "e" for scientific notation
+                                    e.preventDefault();
+                                    }
+                                }  
+                             }
                                 className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition" />
                     </div>
                 </div>
