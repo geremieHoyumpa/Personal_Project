@@ -1,7 +1,10 @@
 import React from 'react';
 import { useState } from 'react';
 import { BusinessInput } from '../../types/businessInput';
-import { totalCost, totalRevenue, breakEvenPoint, netProfit, profitMargin } from '../../types/utils/calculate';
+import { totalCost, totalRevenue, breakEvenPoint, netProfit, profitMargin, generateProfitData, generatePieData } from '../../types/utils/calculate';
+import ProfitChart from './profit-vs-unit-chart';
+import PieChartWithCustomizedLabel from './cost-breakdown-chart';
+import { itemAxisPredicate } from 'recharts/types/state/selectors/axisSelectors';
 
 
 
@@ -19,6 +22,9 @@ export default function Main(){
     const [viewBreakEvenPoint, setBreakEvenPoint] = useState<number>(0);
     const [viewNetProfit, setNetProfit] = useState<number>(0);
     const [viewProfitMargin, setProfitMargin] = useState<number>(0);
+
+    const profitData = generateProfitData(input);
+    const pieChartData = generatePieData(input);
     
   return (
     <div>
@@ -166,13 +172,14 @@ export default function Main(){
                     </button>
                 </div>
                 <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border-2 border-dashed border-blue-200 flex items-center justify-center" style={{height: '350px'}}>
-                    <div className="text-center">
+                    <ProfitChart data = {profitData} />
+                    {/* <div className="text-center">
                         <svg className="w-20 h-20 mx-auto mb-4 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
                         </svg>
                         <p className="text-lg font-semibold text-blue-600 mb-1">Line Chart</p>
                         <p className="text-sm text-blue-500">Shows profit trends as units increase</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
@@ -192,7 +199,7 @@ export default function Main(){
                         </svg>
                     </button>
                 </div>
-                <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border-2 border-dashed border-green-200 flex items-center justify-center" style={{height: '350px'}}>
+                {/* <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg border-2 border-dashed border-green-200 flex items-center justify-center" style={{height: '350px'}}>
                     <div className="text-center">
                         <svg className="w-20 h-20 mx-auto mb-4 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path>
@@ -200,6 +207,28 @@ export default function Main(){
                         </svg>
                         <p className="text-lg font-semibold text-green-600 mb-1">Pie/Donut Chart</p>
                         <p className="text-sm text-green-500">Displays fixed vs variable costs</p>
+                        
+                    </div>
+                    
+                </div> */}
+                <div className="flex gap-8">
+                    <PieChartWithCustomizedLabel isAnimationActive={false} data={pieChartData}/>
+                
+                    <div className="flex flex-col justify-center gap-6 mt-6">
+                        {pieChartData.map((item) => (
+                            <div
+                            key={item.name}
+                            className="flex items-center gap-2 px-4 py-2"
+                            >
+                            <div
+                                className="w-4 h-4 rounded"
+                                style={{ backgroundColor: item.color }}
+                            />
+                            <span className="text-sm font-medium">
+                                {item.name}
+                            </span>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
